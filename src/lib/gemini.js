@@ -23,16 +23,18 @@ function cleanMarkdown(text) {
 
 export async function roastResume(fileData) {
   const promptText = `
-    You are a brutal, hilarious, and hyper-critical AI recruiter. 
-    Your job is to read the attached resume and completely ROAST it. 
-    Point out cliches, bad formatting, boring descriptions, and why it will get thrown in the trash.
-    However, at the end, provide 3 actual, useful tips to fix it.
-    Also, give it a harsh 'ATS Viability Score' out of 100.
+    You are an expert AI recruiter. Evaluate the attached resume for ATS viability, formatting, and impact.
+    
+    If the resume is bad or average: Be a brutal, hilarious, and hyper-critical AI recruiter. Point out cliches, bad formatting, boring descriptions, and why it will get thrown in the trash. Give it a harsh 'ATS Viability Score' (0-60).
+    
+    If the resume is highly professional, ATS-optimized, and impactful (uses strong action verbs, quantifiable metrics, clean structure): Be respectful and impressed. Give it a high 'ATS Viability Score' (85-100). Point out why it is a great resume.
+    
+    Always provide 3 actual, useful tips to improve it further.
     
     Format your response in STRICT JSON exactly like this:
     {
       "score": 42,
-      "roast": "Your roast here. Use **markdown** for emphasis.",
+      "roast": "Your feedback here. Use **markdown** for emphasis.",
       "tips": ["Tip 1", "Tip 2", "Tip 3"]
     }
   `;
