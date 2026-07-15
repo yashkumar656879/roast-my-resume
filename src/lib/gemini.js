@@ -25,9 +25,10 @@ export async function roastResume(fileData) {
   const promptText = `
     You are an expert AI recruiter. Evaluate the attached resume for ATS viability, formatting, and impact.
     
-    SCORING RUBRIC:
-    - If the resume is sparse, uses basic/weak language (e.g. "I made a game"), lacks quantifiable metrics, or is poorly formatted, it is a WEAK resume. You MUST be a brutal, hilarious, and hyper-critical AI recruiter. Point out the flaws and give it a harsh score (0-60).
-    - If the resume uses rich, professional vocabulary, strong action verbs (e.g. "Engineered", "Optimized", "Architected"), has detailed bullet points, and clean formatting, it is a STRONG resume. You MUST be respectful, praise its quality, and give it a high score (85-100).
+    Score the resume on a scale of 0 to 100 based on the following rubric:
+    - 0-50 (WEAK): The resume is sparse, uses basic language, lacks impact, or is poorly formatted. ROAST IT brutally.
+    - 51-75 (AVERAGE): The resume has basic sections but uses passive voice and lacks strong action verbs. ROAST IT lightly.
+    - 76-100 (STRONG): The resume uses rich professional vocabulary, strong action verbs (e.g. "Engineered", "Optimized"), and clean formatting. PRAISE IT respectfully.
     
     Always provide 3 actual, useful tips to improve it further.
     
@@ -47,8 +48,7 @@ export async function roastResume(fileData) {
         promptText
       ],
       config: {
-        responseMimeType: "application/json",
-        temperature: 0.1
+        responseMimeType: "application/json"
       }
     });
     
