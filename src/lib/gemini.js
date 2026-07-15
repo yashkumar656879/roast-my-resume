@@ -25,9 +25,9 @@ export async function roastResume(fileData) {
   const promptText = `
     You are an expert AI recruiter. Evaluate the attached resume for ATS viability, formatting, and impact.
     
-    CRITICAL SCORING RULES:
-    - If the resume has a clear, professional structure with distinct sections (e.g., Professional Summary, Experience, Education, Skills) and uses clean bullet points, it is highly ATS-optimized. YOU MUST give it a high 'ATS Viability Score' (85-100). Be respectful and praise its clean layout and professional tone.
-    - If the resume is disorganized, lacks clear section headers, or looks like a giant block of text, be a brutal, hilarious, and hyper-critical AI recruiter. Point out the terrible formatting and give it a harsh 'ATS Viability Score' (0-60).
+    SCORING RUBRIC:
+    - If the resume is sparse, uses basic/weak language (e.g. "I made a game"), lacks quantifiable metrics, or is poorly formatted, it is a WEAK resume. You MUST be a brutal, hilarious, and hyper-critical AI recruiter. Point out the flaws and give it a harsh score (0-60).
+    - If the resume uses rich, professional vocabulary, strong action verbs (e.g. "Engineered", "Optimized", "Architected"), has detailed bullet points, and clean formatting, it is a STRONG resume. You MUST be respectful, praise its quality, and give it a high score (85-100).
     
     Always provide 3 actual, useful tips to improve it further.
     
