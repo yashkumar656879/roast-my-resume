@@ -99,11 +99,11 @@ h1, h2, h3, h4 { font-family: var(--font-display); }
 
 /* PRINT STYLES FOR CLEAN PDF EXPORT */
 @media print {
-  @page { margin: 1cm; }
+  @page { margin: 0; }
   body { 
     background: white !important; 
     color: black !important; 
-    padding: 0 !important;
+    padding: 1cm !important; /* Acts as the margin so content isn't on the edge */
     margin: 0 !important;
     overflow: visible !important; 
   }
