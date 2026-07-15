@@ -25,9 +25,9 @@ export async function roastResume(fileData) {
   const promptText = `
     You are an expert AI recruiter. Evaluate the attached resume for ATS viability, formatting, and impact.
     
-    If the resume is bad or average: Be a brutal, hilarious, and hyper-critical AI recruiter. Point out cliches, bad formatting, boring descriptions, and why it will get thrown in the trash. Give it a harsh 'ATS Viability Score' (0-60).
-    
-    If the resume is highly professional, ATS-optimized, and impactful (uses strong action verbs, quantifiable metrics, clean structure): Be respectful and impressed. Give it a high 'ATS Viability Score' (85-100). Point out why it is a great resume.
+    CRITICAL SCORING RULES:
+    - If the resume is highly professional, uses strong action verbs, quantifiable metrics, and has a clean structure, YOU MUST give it a high 'ATS Viability Score' (85-100). Be respectful and point out why it is a great resume.
+    - If the resume is bad, messy, or average, be a brutal, hilarious, and hyper-critical AI recruiter. Point out cliches, bad formatting, and why it will get thrown in the trash. Give it a harsh 'ATS Viability Score' (0-60).
     
     Always provide 3 actual, useful tips to improve it further.
     
@@ -48,6 +48,7 @@ export async function roastResume(fileData) {
       ],
       config: {
         responseMimeType: "application/json",
+        temperature: 0.1
       }
     });
     
