@@ -5,6 +5,9 @@ export default function RoastResults({ data, onShare }) {
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [isFixing, setIsFixing] = useState(false);
   const [fixedResume, setFixedResume] = useState(null);
+  const [isWaitingForVerification, setIsWaitingForVerification] = useState(false);
+  const [paymentId, setPaymentId] = useState('');
+  const [paymentError, setPaymentError] = useState('');
 
   if (!data) return null;
 
@@ -25,9 +28,17 @@ export default function RoastResults({ data, onShare }) {
     // Open the real Razorpay payment link in a new tab
     window.open('https://rzp.io/rzp/DEGyS9pQ', '_blank');
     
-    // We rely on the honor system for the MVP (generate it simultaneously)
-    alert('A secure payment window has opened in a new tab! Please complete the ₹99 payment there. We are generating your premium resume in the background right now!');
-    
+    // Trigger the verification UI instead of generating immediately
+    setIsWaitingForVerification(true);
+  };
+
+  const handleVerifyPayment = async () => {
+    if (!paymentId.trim().startsWith('pay_') || paymentId.trim().length < 14) {
+      setPaymentError('Invalid Payment ID. It should look like pay_XXXXXX');
+      return;
+    }
+    setPaymentError('');
+    setIsWaitingForVerification(false);
     await generatePremiumResume();
   };
 
@@ -101,8 +112,23 @@ export default function RoastResults({ data, onShare }) {
             <ul className="tips-list">{data.tips.map((tip, idx) => (<li key={idx} dangerouslySetInnerHTML={{ __html: tip }}></li>))}</ul>
             <div className="premium-upsell mt-4">
               <h4>Too lazy to fix it yourself?</h4>
+              
               {isFixing ? (
                 <p style={{color: '#10b981', fontWeight: 'bold', fontSize: '1.2rem'}}>✨ The AI is working its magic... Please wait...</p>
+              ) : isWaitingForVerification ? (
+                <div className="verification-box">
+                  <p style={{marginBottom: '1rem', color: '#eab308'}}>Please complete your ₹99 payment in the Razorpay tab, then enter your Payment ID below to unlock your resume.</p>
+                  <input 
+                    type="text" 
+                    placeholder="e.g. pay_OXYZ1234567890" 
+                    value={paymentId} 
+                    onChange={(e) => setPaymentId(e.target.value)}
+                    className="payment-input"
+                  />
+                  {paymentError && <p style={{color: '#ef4444', fontSize: '0.9rem', marginTop: '0.5rem'}}>{paymentError}</p>}
+                  <button className="btn-primary verify-btn mt-4" onClick={handleVerifyPayment}>Verify Payment & Generate</button>
+                  <button className="btn-secondary mt-4" style={{border: 'none', fontSize: '0.9rem'}} onClick={() => setIsWaitingForVerification(false)}>Cancel</button>
+                </div>
               ) : (
                 <button className="btn-primary premium-btn" onClick={handlePayment}>Let AI Rewrite It Perfectly For ₹99</button>
               )}
@@ -135,6 +161,11 @@ export default function RoastResults({ data, onShare }) {
         .premium-upsell h4 { margin-bottom: 1rem; font-size: 1.2rem; color: white; }
         .premium-btn { background: linear-gradient(135deg, #10b981 0%, #059669 100%); width: 100%; max-width: 400px; font-size: 1.2rem; padding: 1rem; border: none; cursor: pointer; color: white; border-radius: 9999px; transition: all 0.3s; }
         .premium-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3); }
+        .verification-box { background: rgba(0,0,0,0.2); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); }
+        .payment-input { width: 100%; max-width: 300px; padding: 0.8rem 1rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.5); color: white; font-family: monospace; font-size: 1.1rem; text-align: center; }
+        .payment-input:focus { outline: none; border-color: #10b981; }
+        .verify-btn { background: #10b981; color: white; padding: 0.8rem 2rem; border-radius: 9999px; border: none; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+        .verify-btn:hover { background: #059669; transform: translateY(-2px); }
       `}</style>
     </div>
   );
