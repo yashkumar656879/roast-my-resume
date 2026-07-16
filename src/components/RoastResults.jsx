@@ -22,7 +22,12 @@ export default function RoastResults({ data, onShare }) {
   };
 
   const handlePayment = async () => {
-    alert('Simulating Checkout... Payment Successful! We collected $5.');
+    // Open the real Razorpay payment link in a new tab
+    window.open('https://rzp.io/rzp/DEGyS9pQ', '_blank');
+    
+    // We rely on the honor system for the MVP (generate it simultaneously)
+    alert('A secure payment window has opened in a new tab! Please complete the ₹99 payment there. We are generating your premium resume in the background right now!');
+    
     await generatePremiumResume();
   };
 
@@ -30,7 +35,7 @@ export default function RoastResults({ data, onShare }) {
     return (
       <div className="results-container animate-float">
         <div className="glass-panel print-container" style={{ padding: '4rem', textAlign: 'left' }}>
-          <h2 className="no-print" style={{color: '#10b981', marginBottom: '2rem', textAlign: 'center'}}>✨ Your $5 Premium Resume</h2>
+          <h2 className="no-print" style={{color: '#10b981', marginBottom: '2rem', textAlign: 'center'}}>✨ Your ₹99 Premium Resume</h2>
           
           <div className="no-print" style={{backgroundColor: 'rgba(16, 185, 129, 0.1)', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: '1px solid rgba(16, 185, 129, 0.5)', color: '#34d399', textAlign: 'center'}}>
             <strong>Pro Tip:</strong> Click anywhere on the text below to edit it (like filling in brackets or missing names) before saving as PDF!
@@ -99,7 +104,7 @@ export default function RoastResults({ data, onShare }) {
               {isFixing ? (
                 <p style={{color: '#10b981', fontWeight: 'bold', fontSize: '1.2rem'}}>✨ The AI is working its magic... Please wait...</p>
               ) : (
-                <button className="btn-primary premium-btn" onClick={handlePayment}>Let AI Rewrite It Perfectly For $5</button>
+                <button className="btn-primary premium-btn" onClick={handlePayment}>Let AI Rewrite It Perfectly For ₹99</button>
               )}
             </div>
           </div>
